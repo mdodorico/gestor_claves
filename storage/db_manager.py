@@ -4,10 +4,10 @@ import hashlib
 
 def connect_to_database():
   connection = mysql.connector.connect(
-      host="localhost",         # Cambia por tu host de MySQL (generalmente localhost)
-      user="root",        # El usuario de tu base de datos
-      password="rootPass06", # La contraseña de tu base de datos
-      database="password_manager"  # El nombre de la base de datos donde almacenarás los datos
+      host="localhost",         
+      user="root",        
+      password="root", 
+      database="password_manager"  
   )
   return connection
 
@@ -70,20 +70,11 @@ def get_password_data(username, password):
  
 def store_password(salt_hex, hashed_password, username, motive):
     try:
-        # Conectar a la base de datos
         connection = connect_to_database()
         cursor = connection.cursor()
-
-        # Sentencia SQL para insertar los datos
         insert_query = """INSERT INTO passwords (username, motive, salt, hash_password) VALUES (%s, %s, %s, %s)"""
-
-        # Ejecutar la consulta de inserción
         cursor.execute(insert_query, (username, motive, salt_hex, hashed_password))
-
-        # Confirmar los cambios en la base de datos
         connection.commit()
-
-        # Si llegamos aquí, la operación fue exitosa
         show_message_box("Éxito", "La clave se almacenó correctamente.")
         
         return True
@@ -97,7 +88,6 @@ def store_password(salt_hex, hashed_password, username, motive):
         return False
 
     finally:
-        # Siempre cerramos el cursor y la conexión
         if cursor:
             cursor.close()
         if connection:
