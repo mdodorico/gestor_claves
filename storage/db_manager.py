@@ -16,7 +16,6 @@ def get_data():
     try:
         connection = connect_to_database()
         cursor = connection.cursor()
-
         query = "SELECT username, motive, created_at FROM passwords"
         cursor.execute(query)
         result = cursor.fetchall() 
