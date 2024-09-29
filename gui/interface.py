@@ -2,8 +2,6 @@ from utils.password_utils import *
 import datetime
 from storage.db_manager import *
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QTextEdit, QVBoxLayout, QWidget, QLabel, QLineEdit, QDialog
-
-# Sintaxis de herencia ->  subclase(superclase)
 from PyQt6.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QTableWidget, QTableWidgetItem
 
 class PasswordManager(QMainWindow):
@@ -47,7 +45,6 @@ class PasswordManager(QMainWindow):
         self.password = generate_password()
         self.text_area_password.setText(self.password)
 
-
     def on_get_data(self):
         data = get_data()
         
@@ -67,7 +64,6 @@ class PasswordManager(QMainWindow):
         else:
             show_message_box("Sin datos", "No hay claves almacenadas para mostrar")
 
-
     def on_password_to_hash(self):
         if self.password:
             salt_hex, hashed_password = password_to_hash(self.password)  
@@ -79,14 +75,11 @@ class PasswordManager(QMainWindow):
                     self.table_widget.setRowCount(0) 
                     self.text_area_password.clear()
 
-
     def on_recover_password(self):
         self.input_window = VerifyPassword()  
         self.input_window.show()
 
-       
 
-# QDialog permite que la ventana se comporte como un cuadro de diálogo modal y que se pueda esperar el resultado antes de continuar
 class Username(QDialog): 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -116,20 +109,15 @@ class Username(QDialog):
 
         self.setLayout(layout)
 
-
     def on_save(self):
         username = self.text_input_username.text()
         motive = self.text_input_motive.text()
-
-        # Limpiar cualquier mensaje de error previo
         self.error_label.setText("")
 
         if username and motive:
             self.accept() 
         else:
-            # Mostrar un mensaje de error si el campo está vacío
             self.error_label.setText("Este campo es obligatorio.")
-
 
     def get_data(self):
         return self.text_input_username.text(), self.text_input_motive.text()
@@ -147,7 +135,6 @@ class VerifyPassword(QMainWindow):
         
         self.label_password = QLabel("Ingrese la clave:", self)
         self.text_input_password = QLineEdit(self)
-        # self.text_input_user.setEchoMode(QLineEdit.EchoMode.Password)  # Para ocultar la entrada
 
         self.button = QPushButton("Enviar", self)
         self.button.clicked.connect(self.on_check_password)
@@ -163,8 +150,6 @@ class VerifyPassword(QMainWindow):
         container.setLayout(layout)
         self.setCentralWidget(container)
     
-    
-
     def on_check_password(self):
         username = self.text_input_user.text()
         password = self.text_input_password.text()
